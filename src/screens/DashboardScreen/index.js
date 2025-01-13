@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, FlatList, ActivityIndicator, StyleSheet,Text } from 'react-native';
 import AssetItem from '../../components/assetItem';
 import ErrorMessage from '../../components/ErrorMessage';
 import { fetchInitialPrices } from '../../services/api';
 import useWebSocket from '../../hooks/useWebSocket';
+import dashboard from './style';
+
+
 
 const popularAssets = ['AAPL', 'GOOGL', 'MSFT', 'TSLA', 'NFLX', 'NVDA', 'AMD', 'INTC'];
 
@@ -42,28 +45,25 @@ const DashboardScreen = () => {
   });
 
   return (
-    <View style={styles.container}>
+    <View style={dashboard.container}>
+      <Text style={dashboard.header}>List of Assets</Text>
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : error ? (
         <ErrorMessage message={error} />
       ) : (
-        <FlatList
+        <FlatList style={dashboard.flat}
           data={assets}
+          
           keyExtractor={(item) => item.symbol}
-          renderItem={({ item }) => <AssetItem symbol={item.symbol} price={item.price} />}
+          renderItem={({ item }) => (<View style={dashboard.flat}> <AssetItem symbol={item.symbol} price={item.price} /></View>)}
         />
       )}
+      <Text style={dashboard.trade}>Buy or Sell an asset</Text>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#f5f5f5',
-  },
-});
+
 
 export default DashboardScreen;
