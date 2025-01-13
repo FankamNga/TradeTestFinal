@@ -13,6 +13,7 @@ const dashboard = StyleSheet.create({
         flex: 1,
         color: COLORS.first,        
     },
+
     header: { 
         color: 'white',
         fontSize: 24, 

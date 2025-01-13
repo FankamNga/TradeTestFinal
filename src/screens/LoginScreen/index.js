@@ -27,8 +27,8 @@ const LoginScreen = ({ navigation }) => {
       style={login.gradiant} // Style du dégradé
     >
       <Text style={login.title}>Welcome</Text>
-      <TextInput style={login.input} placeholder="Nom d'utilisateur" onChangeText={setUsername} />
-      <TextInput style={login.input} placeholder="Mot de passe" secureTextEntry onChangeText={setPassword} />
+      <TextInput style={login.input} placeholder="Username" onChangeText={setUsername} />
+      <TextInput style={login.input} placeholder="Password" secureTextEntry onChangeText={setPassword} />
       <TouchableOpacity activeOpacity={0.7} style={login.button} onPress={handleLogin} >
         <Text>Se connecter</Text>
       </TouchableOpacity>
