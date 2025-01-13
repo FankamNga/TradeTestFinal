@@ -1,7 +1,7 @@
 Popular Assets Application
 
 This project is a React Native application that retrieves and displays the latest prices for popular financial assets, such as stocks and cryptocurrencies, using Alpaca's API. The application also integrates WebSocket functionality for real-time price updates.
-
+the demo is in the VideoTest folder
 Features
 
 Initial Data Fetching: Retrieves the latest prices for 10 popular financial assets from Alpaca's API.
