@@ -1,79 +1,107 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+Popular Assets Application
 
-# Getting Started
+This project is a React Native application that retrieves and displays the latest prices for popular financial assets, such as stocks and cryptocurrencies, using Alpaca's API. The application also integrates WebSocket functionality for real-time price updates.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+Features
 
-## Step 1: Start the Metro Server
+Initial Data Fetching: Retrieves the latest prices for 10 popular financial assets from Alpaca's API.
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+Real-Time Updates: Utilizes WebSocket to receive live price updates and display them in the application.
 
-To start Metro, run the following command from the _root_ of your React Native project:
+Error Handling: Displays error messages if data fetching fails.
 
-```bash
-# using npm
-npm start
+Modular Codebase: Components, hooks, and services are organized for easy maintenance and reusability.
 
-# OR using Yarn
-yarn start
-```
+Installation
 
-## Step 2: Start your Application
+Prerequisites
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+Node.js: Ensure you have Node.js installed.
 
-### For Android
+React Native Environment: Follow the React Native CLI setup guide for your platform.
 
-```bash
-# using npm
-npm run android
+Alpaca Account: Obtain your API keys from Alpaca.
 
-# OR using Yarn
-yarn android
-```
+Clone the Repository
 
-### For iOS
+git clone <repository-url>
+cd <repository-folder>
 
-```bash
-# using npm
-npm run ios
+Install Dependencies
 
-# OR using Yarn
-yarn ios
-```
+npm install
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+Configuration
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+Set API Keys
 
-## Step 3: Modifying your App
+Create an .env file in the root directory.
 
-Now that you have successfully run the app, let's modify it.
+Add your Alpaca API keys:
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+APCA_API_KEY_ID=your_api_key
+APCA_API_SECRET_KEY=your_secret_key
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+File Structure
 
-## Congratulations! :tada:
+src/
+├── components/
+│   ├── AssetItem.js          # Component to display individual assets
+│   └── ErrorMessage.js       # Component to display error messages
+├── hooks/
+│   └── useWebSocket.js       # Custom hook to manage WebSocket connection
+├── services/
+│   └── api.js                # API service to fetch initial prices
+└── screens/
+    └── PopularAssetsScreen.js # Main screen for the application
 
-You've successfully run and modified your React Native App. :partying_face:
+How to Run
 
-### Now what?
+Start the Metro bundler:
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+npx react-native start
 
-# Troubleshooting
+Run the application on an emulator or a connected device:
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+Android:
 
-# Learn More
+npx react-native run-android
 
-To learn more about React Native, take a look at the following resources:
+iOS:
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+npx react-native run-ios
+
+Usage
+
+The app fetches the initial prices of the 10 predefined assets (e.g., AAPL, GOOGL, etc.) from Alpaca's API.
+
+Real-time updates for these assets are received through a WebSocket connection.
+
+Prices are displayed in a list format, with each row showing the asset's symbol and its current price.
+
+Dependencies
+
+React Native: For building the mobile application.
+
+Axios: For making HTTP requests to Alpaca's API.
+
+isomorphic-ws: For WebSocket support.
+
+Potential Improvements
+
+User-Defined Assets: Allow users to add or remove assets dynamically.
+
+Pagination: Load more than 10 assets with pagination.
+
+Styling: Improve the UI with advanced designs.
+
+Testing: Add unit and integration tests for the app.
+
+License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+Author
+
+Developed by [Your Name].
+
