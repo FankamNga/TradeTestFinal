@@ -1,59 +1,69 @@
-import React, { useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { loadAssets } from '../../redux/slices/assetsSlice';
-import { addTrade } from '../../redux/slices/tradesSlice';
+import React, { useEffect, useState } from 'react';
+import { View, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
+import AssetItem from '../../components/assetItem';
+import ErrorMessage from '../../components/ErrorMessage';
+import { fetchInitialPrices } from '../../services/api';
+import useWebSocket from '../../hooks/useWebSocket';
 
-import { NewTimeframe } from "@alpacahq/alpaca-trade-api/dist/resources/datav2/entityv2";
+const popularAssets = ['AAPL', 'GOOGL', 'MSFT', 'TSLA', 'NFLX', 'NVDA', 'AMD', 'INTC'];
 
 const DashboardScreen = () => {
-  const dispatch = useDispatch();
-  const assets = useSelector((state) => state.assets.list);
-  const balance = useSelector((state) => state.trades.balance);
+  const [assets, setAssets] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    dispatch(loadAssets());
-  }, [dispatch]);
+    const fetchPrices = async () => {
+      setLoading(true);
+      try {
+        const prices = await fetchInitialPrices(popularAssets);
+        const initialAssets = popularAssets.map((symbol) => ({
+          symbol,
+          price: prices['quotes'][symbol]?.ap || 'Unavailable',
+        }));
+        setAssets(initialAssets);
+      } catch (err) {
+        setError('Impossible de récupérer les prix initiaux.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const handleBuy = (symbol, price) => {
-    const qty = 1; // Acheter 1 unité
-    dispatch(addTrade({ symbol, price, qty, type: 'buy' }));
-  };
+    fetchPrices();
+  }, []);
+
+  // Mise à jour des prix en temps réel via WebSocket
+  useWebSocket(popularAssets, (symbol, price) => {
+    setAssets((prevAssets) =>
+      prevAssets.map((asset) =>
+        asset.symbol === symbol ? { ...asset, price: price || 'Unavailable' } : asset
+      )
+    );
+  });
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Actifs Tradables</Text>
-      <Text style={styles.balance}>Solde : ${balance.toFixed(2)}</Text>
-      <FlatList
-        data={assets}
-        keyExtractor={(item) => item.symbol}
-        renderItem={({ item }) => (
-          <View style={styles.row}>
-            <Text style={styles.symbol}>{item.symbol}</Text>
-            <Text>${item.price || 'N/A'}</Text>
-            <TouchableOpacity
-              style={styles.buyButton}
-              onPress={() => handleBuy(item.symbol, item.price)}
-            >
-              <Text style={styles.buyText}>Acheter</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      />
+      {loading ? (
+        <ActivityIndicator size="large" color="#0000ff" />
+      ) : error ? (
+        <ErrorMessage message={error} />
+      ) : (
+        <FlatList
+          data={assets}
+          keyExtractor={(item) => item.symbol}
+          renderItem={({ item }) => <AssetItem symbol={item.symbol} price={item.price} />}
+        />
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
-  title: { fontSize: 24, marginBottom: 10 },
-  balance: { fontSize: 18, marginBottom: 20, color: 'green' },
-  row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
-  symbol: { fontSize: 16 },
-  buyButton: { backgroundColor: '#3498db', padding: 8, borderRadius: 5 },
-  buyText: { color: '#fff', fontWeight: 'bold' },
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#f5f5f5',
+  },
 });
 
 export default DashboardScreen;
-
-
