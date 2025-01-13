@@ -9,16 +9,19 @@ const dashboard = StyleSheet.create({
         padding: 20, 
         backgroundColor: COLORS.main,  
     },
+    flat:{
+        flex: 1,
+        color: COLORS.first,        
+    },
     header: { 
         color: 'white',
         fontSize: 24, 
         marginBottom: 10 
     },
-    input: { 
-        borderWidth: 1, 
-
-        padding: 20, 
-        marginBottom: 15 
+    trade: { 
+        color: 'white',
+        textDecorationLine: 'underline',
+        fontSize: 22, 
     },
   });
 
