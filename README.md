@@ -21,7 +21,7 @@ Alpaca Account: Obtain your API keys from Alpaca.
 Installation
 Clone the repository:
 git clone git@github.com:FankamNga/TradeTestFinal.git
-cd <repository-folder>
+cd TradeTestFinal
 
 Install Dependencies
 
