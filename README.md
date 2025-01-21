@@ -12,35 +12,20 @@ Error Handling: Displays error messages if data fetching fails.
 
 Modular Codebase: Components, hooks, and services are organized for easy maintenance and reusability.
 
-Installation
-
+Setup Instructions
 Prerequisites
-
-Node.js: Ensure you have Node.js installed.
 
 React Native Environment: Follow the React Native CLI setup guide for your platform.
 
 Alpaca Account: Obtain your API keys from Alpaca.
-
-Clone the Repository
-
+Installation
+Clone the repository:
 git clone <repository-url>
 cd <repository-folder>
 
 Install Dependencies
 
 npm install
-
-Configuration
-
-Set API Keys
-
-Create an .env file in the root directory.
-
-Add your Alpaca API keys:
-
-APCA_API_KEY_ID=your_api_key
-APCA_API_SECRET_KEY=your_secret_key
 
 File Structure
 
@@ -53,8 +38,10 @@ src/
 ├── services/
 │   └── api.js                # API service to fetch initial prices
 └── screens/
-    └── PopularAssetsScreen.js # Main screen for the application
-
+    └── Dashboard # Main screen for the application
+      |__indexjs
+    |__ Login
+      |__ indexjs
 How to Run
 
 Start the Metro bundler:
@@ -87,21 +74,7 @@ Axios: For making HTTP requests to Alpaca's API.
 
 isomorphic-ws: For WebSocket support.
 
-Potential Improvements
-
-User-Defined Assets: Allow users to add or remove assets dynamically.
-
-Pagination: Load more than 10 assets with pagination.
-
-Styling: Improve the UI with advanced designs.
-
-Testing: Add unit and integration tests for the app.
-
-License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-
 Author
 
-Developed by [Your Name].
+Developed by FANKAM NGALEUGNI.
 
